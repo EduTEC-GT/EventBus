@@ -2,6 +2,7 @@ package edu.fjbatresv.edutec.librariesapplication.main;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import edu.fjbatresv.edutec.librariesapplication.Event;
 import edu.fjbatresv.edutec.librariesapplication.lib.base.EventBus;
 
 public class MainPresenterImpl implements MainPresenter {
@@ -28,8 +29,22 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     @Subscribe
-    public void onEvent(String upper) {
-        this.view.toUpper(upper);
+    public void onEvent(Event event) {
+        if (event.getError() != null && !event.getError().isEmpty()) {
+            this.view.showError(event.getError());
+        } else {
+            if (event.getMensaje() != null && !event.getMensaje().isEmpty()) {
+                this.view.showMessage(event.getMensaje());
+            }
+            switch (event.getTipo()) {
+                case Event.toUpper:
+                    this.view.toUpper(event.getObj().toString());
+                    break;
+                default:
+                    //TODO: Mostrar mensaje de evento invalido en la vista
+                    break;
+            }
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package edu.fjbatresv.edutec.librariesapplication.main;
 
+import edu.fjbatresv.edutec.librariesapplication.Event;
 import edu.fjbatresv.edutec.librariesapplication.lib.base.EventBus;
 
 public class MainModelImpl implements MainModel {
@@ -11,6 +12,11 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void toUpper(String text) {
-        bus.post(text.toUpperCase());
+        try {
+            //throw new Exception("No mayus");
+            bus.post(new Event(Event.toUpper, "Texto a mayusculas!", text.toUpperCase()));
+        } catch (Exception ex) {
+            bus.post(new Event(ex.getLocalizedMessage()));
+        }
     }
 }

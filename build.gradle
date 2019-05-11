@@ -36,4 +36,5 @@ ext {
     dbflowVersion = "4.0.0-beta2"
     eventBusVersion = '3.1.1'
     butterknifeVersion = '8.8.1'
+    supportLibraryVersion = "28.0.0"
 }
