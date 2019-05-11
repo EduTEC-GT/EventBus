@@ -5,39 +5,48 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import edu.fjbatresv.edutec.librariesapplication.App;
 import edu.fjbatresv.edutec.librariesapplication.R;
 import edu.fjbatresv.edutec.librariesapplication.lib.GreenRobotEventBus;
 import edu.fjbatresv.edutec.librariesapplication.lib.base.EventBus;
 import edu.fjbatresv.edutec.librariesapplication.Mascota;
+import edu.fjbatresv.edutec.librariesapplication.lib.base.ImageLoader;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
+    @Inject
     MainPresenter presenter;
+    @Inject
+    ImageLoader loader;
 
     @BindView(R.id.container)
-    ConstraintLayout container;
+    LinearLayout container;
     @BindView(R.id.text)
     TextView text;
-    Mascota mascota;
-    Mascota mascota2;
+    @BindView(R.id.image)
+    ImageView image;
+
+    private App app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        app = (App) getApplication();
         init();
         presenter.onCreate();
         presenter.toUpper(null);
-        mascota = Mascota.getInstance();
-        mascota.setNombre("Firulais");
-        mascota2 = Mascota.getInstance();
-        Log.e("MASCOTA:", mascota2.getNombre() != null ? mascota2.getNombre(): "");
+        loader.load(image, "https://storage.googleapis.com/io-19-assets/images/global/io-social-banner.png");
     }
 
     @Override
@@ -47,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void init() {
-        EventBus bus = new GreenRobotEventBus(org.greenrobot.eventbus.EventBus.getDefault());
-        MainModel model = new MainModelImpl(bus);
-        presenter = new MainPresenterImpl(model, this, bus);
+        app.main(this).inject(this);
     }
 
     @Override

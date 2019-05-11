@@ -49,6 +49,9 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
     //EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //Dagger2
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
     implementation "javax.annotation:jsr250-api:$rootProject.ext.jsr250Version"
